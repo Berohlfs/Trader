@@ -21,16 +21,24 @@ async def main():
         print(f"MENSAGEM NOVA: {message_content}")
 
         whale_regex = r'Whale:\s*(.*?)\s*%'
-        whale_percentage = float(re.search(whale_regex, message_content).group(1).split()[1])
+        whale_raw = re.search(whale_regex, message_content)
 
         dev_regex = r'Dev:\s*(.*?)\s*%'
-        dev_percentage = float(re.search(dev_regex, message_content).group(1))
+        dev_raw = re.search(dev_regex, message_content)
 
-        if (whale_percentage and dev_percentage):
-            combined_percentage = (whale_percentage + dev_percentage) if whale_percentage != dev_percentage else whale_percentage
-            print(f"Whale %: {whale_percentage}")
-            print(f"Dev %: {dev_percentage}")
+        dev_is_out_regex = r'Dev:\s*(.*?)\s*is Out!'
+        dev_is_out = re.search(dev_is_out_regex, message_content)
+
+        if (whale_raw and (dev_raw ^ dev_is_out)):
+            whale = float(whale_raw.group(1).split()[1])
+            dev = float(dev_raw.group(1)) if (not dev_is_out) else 0
+
+            combined_percentage = (whale + dev) if whale != dev else whale
+
+            print(f"Whale %: {whale}")
+            print(f"Dev %: {dev}")
             print(f"Combined %: {combined_percentage}")
+
             if(combined_percentage <= 8):
                 # Sending to Trojan   
                 await client.send_message(target_chat, message_content)
