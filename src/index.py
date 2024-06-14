@@ -5,7 +5,7 @@ api_id = '24176416'
 api_hash = '4493def8358e3ab32cdd7bd0c08406a2'
 phone_number = '5531999592002'
 source_chat = 'PumpLiveKOTH' 
-target_chat = 'odysseus_trojanbot'  
+target_chat = 'paris_trojanbot'  
 
 client = TelegramClient('MessageForwarder', api_id, api_hash)
 
@@ -29,20 +29,22 @@ async def main():
         dev_is_out_regex = r'Dev:\s*(.*?)\s*is Out!'
         dev_is_out = re.search(dev_is_out_regex, message_content)
 
-        if (whale_raw and (dev_raw ^ dev_is_out)):
+        if (whale_raw and (dev_raw or dev_is_out)):
             whale = float(whale_raw.group(1).split()[1])
             dev = float(dev_raw.group(1)) if (not dev_is_out) else 0
 
             combined_percentage = (whale + dev) if whale != dev else whale
 
-            print(f"Whale %: {whale}")
+            print(f"\n\nWhale %: {whale}")
             print(f"Dev %: {dev}")
             print(f"Combined %: {combined_percentage}")
 
-            if(combined_percentage <= 8):
-                # Sending to Trojan   
+            flag = 8 if (dev == whale or dev == 0) else 10
+            print(f"FLAG: {flag}")
+
+            if(combined_percentage <= flag):
                 await client.send_message(target_chat, message_content)
-                print(f"TOKEN ENVIADO AO TROJAN!")   
+                print(f"TOKEN ENVIADO AO TROJAN!")  
             else: 
                 print(f"Porcentagens muito altas... RUGPULL ALERT!")   
         else:
