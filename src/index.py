@@ -18,7 +18,9 @@ async def main():
     async def handler(event):
         # Message content
         message_content = event.message.message
-        print(f"MENSAGEM NOVA: {message_content}")
+        print(f"\n\nMENSAGEM NOVA: {message_content}")
+        message_first_social = event.message.buttons[1][0].text
+        print(f"Primeiro social: {message_first_social}")
 
         whale_regex = r'Whale:\s*(.*?)\s*%'
         whale_raw = re.search(whale_regex, message_content)
@@ -29,26 +31,31 @@ async def main():
         dev_is_out_regex = r'Dev:\s*(.*?)\s*is Out!'
         dev_is_out = re.search(dev_is_out_regex, message_content)
 
-        if (whale_raw and (dev_raw or dev_is_out)):
+        replies_regex = r'Replies:\s*(.*?)\s*📈'
+        replies_raw = re.search(replies_regex, message_content)
+
+        if (whale_raw and (dev_raw or dev_is_out) and replies_raw):
             whale = float(whale_raw.group(1).split()[1])
             dev = float(dev_raw.group(1)) if (not dev_is_out) else 0
+            replies = int(replies_raw.group(1))
 
             combined_percentage = (whale + dev) if whale != dev else whale
 
-            print(f"\n\nWhale %: {whale}")
+            print(f"\nWhale %: {whale}")
             print(f"Dev %: {dev}")
             print(f"Combined %: {combined_percentage}")
+            print(f"Total replies: {replies}")
 
-            flag = 8 if (dev == whale or dev == 0) else 10
+            flag = 6 if (dev == whale or dev == 0) else 12
             print(f"FLAG: {flag}")
 
-            if(combined_percentage <= flag):
+            if(combined_percentage <= flag and replies >= 0 and message_first_social == "Website"):
                 await client.send_message(target_chat, message_content)
                 print(f"TOKEN ENVIADO AO TROJAN!")  
             else: 
-                print(f"Porcentagens muito altas... RUGPULL ALERT!")   
+                print(f"(RUGPULL ALERT) ou (Few replies) ou (Webiste inexistente).")
         else:
-            return print("Whale and Dev percentages not found.")
+            return print("\nErro ao encontrar os dados necessários para análise.")
 
     await client.run_until_disconnected()
 
