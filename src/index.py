@@ -1,11 +1,14 @@
 from telethon import TelegramClient, events
 import re
+from dotenv import load_dotenv
+import os
 
-api_id = '29979879'
-api_hash = '648942e486bf97a31d9106dbb8cd26f0'
-phone_number = '5531998100509'
+load_dotenv()
 
-target_chat = 'diomedes_trojanbot'
+api_id = os.getenv('API_ID')
+api_hash = os.getenv('API_HASH')
+phone_number = os.getenv('PHONE_NUMBER')
+target_chat = os.getenv('TARGET_CHAT')
 
 client = TelegramClient('MessageForwarder', api_id, api_hash)
 
