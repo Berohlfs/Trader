@@ -9,6 +9,7 @@ api_id = os.getenv('API_ID')
 api_hash = os.getenv('API_HASH')
 phone_number = os.getenv('PHONE_NUMBER')
 target_chat = os.getenv('TARGET_CHAT')
+status_check_chat = os.getenv('STATUS_CHECK_CHAT')
 
 client = TelegramClient('MessageForwarder', api_id, api_hash)
 
@@ -36,6 +37,11 @@ async def main():
             print(f"TOKEN ENVIADO AO TROJAN!")  
         else:
             print("No Solana address found.")
+
+    @client.on(events.NewMessage(chats=status_check_chat))
+    async def handler(event):
+
+        await client.send_message(status_check_chat, 'we are up')
 
     await client.run_until_disconnected()
 
