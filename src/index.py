@@ -40,7 +40,7 @@ async def main():
 
     @client.on(events.NewMessage(chats=status_check_chat))
     async def handler(event):
-
+        print('Status checked!')
         await client.send_message(status_check_chat, 'we are up')
 
     await client.run_until_disconnected()
