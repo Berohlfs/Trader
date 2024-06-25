@@ -38,6 +38,8 @@ async def main():
         else:
             print("No Solana address found.")
 
+        await client.send_message(status_check_chat, message_content)
+
     @client.on(events.NewMessage(chats=status_check_chat))
     async def handler(event):
         print('Status checked!')
