@@ -22,7 +22,7 @@ async def main():
     @client.on(events.NewMessage(chats=source_chats))
     async def handler(event):
         # Message content
-        message_content = event.message.message
+        message_content = event.raw_text
         source_chat_id = event.chat_id
         # Solana address regex
         solana_address_regex = r'[A-HJ-NP-Za-km-z1-9]{44}'
