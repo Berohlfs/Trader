@@ -17,7 +17,7 @@ async def main():
     await client.start()
     print("Client Created and Started")
 
-    source_chats = ["shmooscasino", "wulfcalls", "degenroshis", "luis100xcalls" , "creepercalls", "Cryptocowboyx", "lyxedegen", "evenmoredegen", "Diorscabal"]  # Add your source chat IDs here
+    source_chats = ["shmooscasino", "wulfcalls", "degenroshis", "luis100xcalls" , "creepercalls", "Cryptocowboyx", "lyxedegen", "evenmoredegen", "Diorscabal", -1002040294338]  # Add your source chat IDs here
 
     @client.on(events.NewMessage(chats=source_chats))
     async def handler(event):
@@ -39,7 +39,7 @@ async def main():
 
     @client.on(events.NewMessage(chats=status_check_chat))
     async def statusHandler(event):
-        await client.send_message(status_check_chat, 'We are up!')
+        await client.send_message(status_check_chat, 'We are up!\n\n' + str(source_chats))
 
     await client.run_until_disconnected()
 
