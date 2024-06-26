@@ -33,12 +33,12 @@ async def main():
 
             await client.send_message(target_chat, token_address)
 
-            await client.send_message(status_check_chat, f"Token enviado ao Trojan! ChatID: {source_chat_id} Token: {token_address}")  
+            await client.send_message(status_check_chat, f"Token enviado ao Trojan!\n\n ChatID: {source_chat_id}\nToken: {token_address}")  
         else:
-            await client.send_message(status_check_chat, f"No solana address found. ChatID: {source_chat_id}")
+            await client.send_message(status_check_chat, f"No solana address found.\n\n ChatID: {source_chat_id}")
 
     @client.on(events.NewMessage(chats=status_check_chat))
-    async def handler(event):
+    async def statusHandler(event):
         await client.send_message(status_check_chat, 'We are up!')
 
     await client.run_until_disconnected()
