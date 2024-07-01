@@ -17,7 +17,19 @@ async def main():
     await client.start()
     print("Client Created and Started")
 
-    source_chats = ["shmooscasino", "wulfcalls", "degenroshis", "luis100xcalls" , "creepercalls", "Cryptocowboyx", "lyxedegen", "evenmoredegen", "Diorscabal", -1002040294338, -1001500884162]  # Add your source chat IDs here
+    source_chats = [
+        "shmooscasino", 
+        "wulfcalls", 
+        "degenroshis", 
+        "luis100xcalls", 
+        "creepercalls", 
+        "Cryptocowboyx", 
+        "lyxedegen", 
+        "evenmoredegen", 
+        -1002040294338, # Gem's calls
+        -1001500884162, # Exy's Lab,
+        -1001835320066 # BossMan Calls
+    ]  # Add your source chat IDs here
 
     @client.on(events.NewMessage(chats=source_chats))
     async def handler(event):
