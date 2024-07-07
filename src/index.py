@@ -38,7 +38,7 @@ async def main():
         source_chat_id = event.chat_id
         source_title = event.chat.title if event.chat else ''
         # Solana address regex
-        solana_address_regex = r'[A-HJ-NP-Za-km-z1-9]{44}'
+        solana_address_regex = r'[A-HJ-NP-Za-km-z1-9]{32,44}'
         solana_address = re.search(solana_address_regex, message_content)
 
         if solana_address:
@@ -46,9 +46,9 @@ async def main():
 
             await client.send_message(target_chat, token_address)
 
-            await client.send_message(status_check_chat, f"Token enviado ao Trojan!\n\n ChatID: {source_chat_id}\n Chat name: {source_title}: {token_address}\n Token: {token_address}")  
+            await client.send_message(status_check_chat, f"Token enviado ao Trojan!\n\nChatID: {source_chat_id}\nChat name: {source_title}\n\nToken: {token_address}")  
         else:
-            await client.send_message(status_check_chat, f"No solana address found.\n\n ChatID: {source_chat_id}\n Chat name: {source_title}")
+            await client.send_message(status_check_chat, f"No solana address found.\n\nChatID: {source_chat_id}\nChat name: {source_title}")
 
     @client.on(events.NewMessage(chats=status_check_chat))
     async def statusHandler(event):
