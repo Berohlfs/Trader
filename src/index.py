@@ -22,7 +22,7 @@ async def main():
         "wulfcalls", 
         "degenroshis", 
         "luis100xcalls", 
-        "creepercalls", 
+        # "creepercalls", 
         "Cryptocowboyx", 
         "lyxedegen", 
         "evenmoredegen", 
