@@ -9,7 +9,7 @@ api_id = os.getenv('API_ID')
 api_hash = os.getenv('API_HASH')
 phone_number = os.getenv('PHONE_NUMBER')
 target_chat = os.getenv('TARGET_CHAT')
-status_check_chat = os.getenv('STATUS_CHECK_CHAT')
+log_group = int(os.getenv('LOG_GROUP'))
 
 client = TelegramClient('MessageForwarder', api_id, api_hash)
 
@@ -21,14 +21,17 @@ async def main():
         "shmooscasino", 
         "wulfcalls", 
         "degenroshis", 
-        "luis100xcalls", 
-        # "creepercalls", 
         "Cryptocowboyx", 
         "lyxedegen", 
-        "evenmoredegen", 
-        -1002040294338, # Gem's calls
-        -1001500884162, # Exy's Lab,
-        -1001835320066 # BossMan Calls
+        -1001500884162, # Exy's Lab
+        -1001835320066, # BossMan Calls
+        "LevisAlpha", 
+        "CryptoZinTrades",
+        "shahlito",
+        # "evenmoredegen", 
+        # -1002040294338, # Gem's calls
+        # "luis100xcalls", 
+        # "creepercalls", 
     ]  # Add your source chat IDs here
 
     @client.on(events.NewMessage(chats=source_chats))
@@ -46,13 +49,13 @@ async def main():
 
             await client.send_message(target_chat, token_address)
 
-            await client.send_message(status_check_chat, f"Token enviado ao Trojan!\n\nChatID: {source_chat_id}\nChat name: {source_title}\n\nToken: {token_address}")  
+            await client.send_message(log_group, f"Token enviado ao Trojan!\n\nChatID: {source_chat_id}\nChat name: {source_title}\n\nToken: {token_address}")  
         else:
-            await client.send_message(status_check_chat, f"No solana address found.\n\nChatID: {source_chat_id}\nChat name: {source_title}")
+            await client.send_message(log_group, f"No solana address found.\n\nChatID: {source_chat_id}\nChat name: {source_title}")
 
-    @client.on(events.NewMessage(chats=status_check_chat))
+    @client.on(events.NewMessage(chats=log_group))
     async def statusHandler(event):
-        await client.send_message(status_check_chat, 'We are up!\n\n' + str(source_chats))
+        await client.send_message(log_group, 'We are up!\n\n' + str(source_chats))
 
     await client.run_until_disconnected()
 
